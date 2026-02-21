@@ -10,11 +10,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { sendLoginData } from '@/services/authServices';
 import { schema } from '@/schema/loginSchema'
 import React, { useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 
 
 export default function LoginForm() {
 
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState(null);
     const router = useRouter();
@@ -35,7 +36,7 @@ export default function LoginForm() {
             const response = await sendLoginData(userData);
             // console.log(response);
             if (response?.token) {
-                // localStorage.setItem('token' , response.token);
+                localStorage.setItem('token', response.token);
                 router.push("/");
             } else {
                 setApiError(response.message)
@@ -63,9 +64,23 @@ export default function LoginForm() {
                 {/* Password */}
                 <div className="space-y-1 mb-4">
                     <Label className="text-lg ms-1">Password</Label>
+
+                    <div className="relative w-80">
+                        <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" {...register("password")} className="h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] placeholder:text-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0 pr-10" />
+                        <Button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </Button>
+                    </div>
+                    {errors.password && touchedFields.password && (
+                        <p className="text-red-500 text-sm mt-1 ms-9">{errors.password?.message}</p>
+                    )}
+                </div>
+
+                {/* <div className="space-y-1 mb-4">
+                    <Label className="text-lg ms-1">Password</Label>
                     <Input type="password" placeholder="Enter your password" {...register('password')} className="w-80 h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] placeholder:text-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0" />
                     {errors.password && touchedFields.password && <p className="text-red-500 text-sm mt-1 ms-9">{errors.password?.message}</p>}
-                </div>
+                </div> */}
 
                 {/* Remember + Forgot */}
                 <div className="flex items-center justify-end mb-4 text-sm">

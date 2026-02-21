@@ -12,7 +12,7 @@ export async function sendRegisterData(userData) {
         // console.log(data);
         return data;
 
-    } catch (err) {
+    } catch (data) {
         console.log(data.message);
         return data.message;
     }
@@ -32,7 +32,7 @@ export async function sendLoginData(userData) {
         // console.log(data);
         return data;
 
-    } catch (err) {
+    } catch (data) {
         console.log(data.message);
         return data.message;
     }

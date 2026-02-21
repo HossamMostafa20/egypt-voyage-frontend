@@ -21,7 +21,7 @@ export default function ChangePassword() {
 
     return <>
         {/* Title */}
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-center font-medium text-[#0D3B66] p-6 sm:p-9">Hi , Jack</h1>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-center font-medium text-[#0D3B66] p-6 sm:p-9">Hi , Esraa</h1>
 
         <div className="flex flex-col items-center justify-center px-4">
             {/* Tabs */}

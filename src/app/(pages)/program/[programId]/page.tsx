@@ -1,67 +1,136 @@
+import Slider from '@/components/Slider/Slider'
 import { Button } from '@/components/ui/button'
-import { Facebook, Globe, MapPin } from 'lucide-react'
+import { ProgramI } from '@/interfaces'
+import { Facebook, Globe, MapPin, Star } from 'lucide-react'
+import { Params } from 'next/dist/server/request/params'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
-export default function ProgramDetails() {
+export default async function ProgramDetails({ params }: { params: Params }) {
+
+    let { programId } = await params;
+    console.log(programId);
+
+    const response = await fetch('http://egyptvoyage.runasp.net/api/Programs/' + programId);
+    const program: ProgramI = await response.json();
+    console.log(program);
+
     return <>
-        <section className="container mx-auto pb-15">
-
-            {/* IMAGE */}
-            <div className="pt-6">
-                <div className="px-6">
-                    <div className="relative w-full h-85 lg:h-100 overflow-hidden">
-                        <Image src="/program1.jpg" alt="Program" fill />
+        <div className="pb-10">
+            <div className="container mx-auto px-6">
+                {/* IMAGE */}
+                <div className="pt-10">
+                    <div className="rounded-3xl overflow-hidden shadow-2xl">
+                        <Slider images={program.images} />
                     </div>
                 </div>
-            </div>
 
-            {/* ===== MAIN SECTION ===== */}
-            <div className="px-6 mt-3">
+                {/* CONTENT */}
+                <div className="mt-8">
 
-                {/* Title + Button */}
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                    <div className='flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8'>
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#FBBF6D]">
-                            Egypt Pyramids Tours Program
-                        </h1>
-                        {/* icons */}
-                        <div className="flex mt-0 md:mt-1.5 lg:mt-2 gap-4 text-[#0D3B66]">
-                            <Globe className="cursor-pointer hover:scale-110 transition" />
-                            <Facebook className="cursor-pointer hover:scale-110 transition" />
-                            <MapPin className="cursor-pointer hover:scale-110 transition" />
+                    {/* HEADER */}
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                        {/* LEFT SIDE */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-8 text-[#0D3B66]">
+                                <h1 className="text-3xl lg:text-4xl font-bold text-[#0D3B66]">{program.name}</h1>
+                                <Link href={program.link}>
+                                    <Globe className="cursor-pointer mt-2 hover:scale-110 transition" />
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* BUTTON */}
+                        <Button className="px-8 py-6 rounded-full shadow-lg bg-[#daab65] text-white hover:bg-[#c3985c] transition cursor-pointer">
+                            Add To Favourite
+                        </Button>
+                    </div>
+
+                    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-center bg-white/10 backdrop-blur-xl border border-white/20 p-5 sm:p-8 rounded-3xl shadow-2xl">
+                        {/* City */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-xs sm:text-sm tracking-wide">City</p>
+                            <p className="font-semibold text-white text-base sm:text-lg md:text-xl">{program.country}</p>
+                        </div>
+
+                        {/* Duration */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-xs sm:text-sm tracking-wide">Duration</p>
+                            <p className="font-semibold text-white text-base sm:text-lg md:text-xl">{program.duration}</p>
+                        </div>
+
+                        {/* Price */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-xs sm:text-sm tracking-wide">Price</p>
+                            <p className="font-semibold text-white text-base sm:text-lg md:text-xl">{program.price.toLocaleString()} EGP</p>
                         </div>
                     </div>
-                    {/* Button */}
-                    <Button className="w-full sm:w-auto cursor-pointer px-6 py-5 mb-2 md:mb-3 lg:px-7 lg:py-6 mt-0 lg:mt-2 rounded-full shadow-xl bg-linear-to-b from-[#D3A15C] to-[#00000055] hover:scale-95 transition">
-                        Add To Favourite
-                    </Button>
-                </div>
 
-                {/* ===== TIMELINE ===== */}
-                <div className="relative mt-20 grid md:grid-cols-2 gap-y-16 gap-x-20">
+                    {/* OVERVIEW */}
+                    <div className="mt-8 backdrop-blur-xl bg-white/10 border border-white/20 p-8 rounded-3xl shadow-2xl">
+                        <h2 className="text-2xl font-semibold text-white mb-6">Overview</h2>
 
-                    {/* Vertical line */}
-                    <div className="hidden md:block absolute left-1/2 top-0 h-full w-0.5 bg-[#F4C27A] -translate-x-1/2" />
+                        <div className="relative">
+                            {/* Timeline line */}
+                            {/* <div className="absolute left-4.5 top-2 bottom-2 w-0.5 bg-linear-to-b from-[#D3A15C] via-[#D3A15C]/70 to-transparent" /> */}
 
-                    {/* Day Item */}
-                    {["1", "2", "3", "4"].map((day, i) => (
-                        <div key={i} className={`space-y-2${i % 2 === 0 ? "md:text-right" : ""}`}>
-                            <h2 className="text-3xl font-semibold text-[#F4C27A]"> Day{" "}
-                                <span className="inline-flex items-center justify-center w-8 h-8 ml-2 text-sm rounded-full bg-linear-to-b from-gray-300 to-gray-500 text-white">
-                                    {day}
-                                </span>
-                            </h2>
+                            <div className="space-y-8">
+                                {program.description
+                                    ?.split("\n\n")
+                                    .filter((text: string) => text.trim() !== "")
+                                    .map((text: string, index: number) => (
+                                        <div key={index} className="relative pl-10 sm:pl-14 group transition-all duration-300">
+                                            {/* Circle */}
+                                            <div className="absolute left-0 sm:left-2 top-1 w-6 h-6 rounded-full bg-linear-to-br from-[#D3A15C] to-[#836c59] flex items-center justify-center shadow-md">
+                                                <span className="text-white text-xs font-bold">{index + 1}</span>
+                                            </div>
 
-                            <p className="text-gray-200 leading-relaxed max-w-md">
-                                "Text" refers to written or printed matter, the words of a book,
-                                or an electronic message, but it can also refer to any readable
-                                object like a street sign, painting, or even clothing.
-                            </p>
+                                            {/* Text */}
+                                            <p className="text-white/80 leading-relaxed text-sm sm:text-base group-hover:text-white transition-colors duration-300">{text.trim()}</p>
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* REVIEW BUTTON */}
+                    {/* <div className="flex justify-end mt-10">
+                        <Button className="px-8 py-6 rounded-full bg-linear-to-r from-[#D3A15C] to-[#B48A4A] text-white shadow-xl hover:scale-95 transition cursor-pointer">
+                            Make Review
+                        </Button>
+                    </div> */}
+
+
+                    {/* REVIEWS */}
+                    {/* <div className="mt-5 space-y-6">
+                        {[1, 2].map((item, index) => (
+                            <div key={index} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-xl p-6 flex gap-5 items-start">
+                                <div className="w-12 h-12 rounded-full bg-white/20" />
+                                <div className="flex-1">
+                                    <div className="flex justify-between flex-wrap gap-3">
+                                        <div>
+                                            <h4 className="font-semibold text-white">Ahmed Youssef</h4>
+                                            <p className="text-sm text-white/60">Egypt • 1-1-2023</p>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex text-[#F4C27A]">
+                                                {[...Array(4)].map((_, i) => (
+                                                    <Star key={i} fill="#F4C27A" stroke="none" size={18} />
+                                                ))}
+                                                <Star size={18} />
+                                            </div>
+                                            <span className="text-sm text-white/80">very nice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div> */}
+
                 </div>
             </div>
-        </section>
+        </div>
     </>
 }

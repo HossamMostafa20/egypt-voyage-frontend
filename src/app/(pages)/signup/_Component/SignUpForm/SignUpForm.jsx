@@ -10,10 +10,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { sendRegisterData } from '@/services/authServices';
 import { schema } from '@/schema/registerSchema'
 import React, { useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 
 
 export default function SignUpForm() {
+
+    const [firstshow, setFirstshow] = useState(false);
+    const [secondShow, setSecondShow] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState(null);
@@ -77,13 +80,32 @@ export default function SignUpForm() {
                         <Label className="text-lg ms-1.5">Password</Label>
                         {errors.password && touchedFields.password && <p className="text-red-500 text-sm mt-1 ms-9">{errors.password?.message}</p>}
                     </div>
-                    <Input type="password" placeholder="Enter your password" {...register('password')} className="w-80 h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] placeholder:text-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    <div className="relative w-80">
+                        <Input type={firstshow ? "text" : "password"} placeholder="Enter your password" {...register("password")} className="h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] placeholder:text-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0 pr-10" />
+                        <Button type="button" onClick={() => setFirstshow(!firstshow)} className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
+                            {firstshow ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </Button>
+                    </div>
                 </div>
+
                 <div className="space-y-0.5 mb-7 mt-3">
+                    <Label className="text-lg ms-1.5">Confirm Password</Label>
+
+                    <div className="relative w-80">
+                        <Input type={secondShow ? "text" : "password"} placeholder="Rewrite your password" {...register("rePassword")} className="h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] placeholder:text-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0 pr-10" />
+                        <Button type="button" onClick={() => setSecondShow(!secondShow)} className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
+                            {secondShow ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </Button>
+                    </div>
+                    {errors.rePassword && touchedFields.rePassword && (
+                        <p className="text-red-500 text-sm mt-1.5 ms-3">{errors.rePassword?.message}</p>
+                    )}
+                </div>
+                {/* <div className="space-y-0.5 mb-7 mt-3">
                     <Label className="text-lg ms-1.5">Confirm Password</Label>
                     <Input type="password" placeholder="Rewrite your password" {...register('rePassword')} className="w-80 h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] placeholder:text-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0" />
                     {errors.rePassword && touchedFields.rePassword && <p className="text-red-500 text-sm mt-1.5 ms-3">{errors.rePassword?.message}</p>}
-                </div>
+                </div> */}
 
                 {/* Button */}
                 <Button disabled={loading} type="submit" className="w-full h-12 rounded-2xl text-2xl font-semibold bg-linear-to-b from-[#184e77] to-[#021d33] cursor-pointer">

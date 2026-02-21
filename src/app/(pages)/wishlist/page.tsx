@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function Wishlist() {
   return <>
-    <h1 className="text-3xl font-bold text-[#0D3B66] flex items-center justify-center gap-2 p-3">My Wishlist <Heart className="size-8 text-[#0D3B66] fill-current" /> </h1>
+    <h1 className="text-3xl font-bold text-[#0D3B66] flex items-center justify-center gap-2 p-3">My Favorites<Heart className="size-8 text-[#0D3B66] fill-current" /> </h1>
     <div className='container mx-auto p-2 lg:p-1.5 xl:p-2 md:p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-stretch'>
       <div className='p-0.5'>
         <Card className="flex flex-col h-full transform transition-all duration-500 hover:shadow-[0_0_13px_rgba(0,0,0,0.15)] hover:shadow-black">

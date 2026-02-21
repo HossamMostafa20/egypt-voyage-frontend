@@ -1,129 +1,141 @@
+import Slider from '@/components/Slider/Slider'
 import { Button } from '@/components/ui/button'
-import { Facebook, Globe, MapPin, Star } from 'lucide-react'
+import { LandmarkI } from '@/interfaces'
+import { Facebook, Globe, MapPin, Star, StarIcon } from 'lucide-react'
+import { Params } from 'next/dist/server/request/params'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
-export default function LandmarkDetails() {
+export default async function LandmarkDetails({ params }: { params: Params }) {
+
+    let { landmarkId } = await params;
+    console.log(landmarkId);
+
+    const response = await fetch('http://egyptvoyage.runasp.net/api/Landmarks/' + landmarkId);
+    const landmark: LandmarkI = await response.json();
+    console.log(landmark);
+
+    const totalStars = 5
+    const safeRating = Math.min(
+        Math.max(landmark.rating ?? 0, 0),
+        totalStars
+    )
+
     return <>
-        <div className="container mx-auto pb-15">
-            {/* IMAGE */}
-            <div className="pt-6">
-                <div className="px-6">
-                    <div className="relative w-full h-85 lg:h-105 overflow-hidden">
-                        <Image src="/img2.png" alt="The Nile Ritz Carlton" fill priority />
+        <div className="pb-20">
+            <div className="container mx-auto px-6">
+                {/* IMAGE */}
+                <div className="pt-10">
+                    <div className="rounded-3xl overflow-hidden shadow-2xl">
+                        <Slider images={landmark.images} />
                     </div>
                 </div>
-            </div>
 
-            {/* CONTENT */}
-            <div className="px-6 mt-3">
+                {/* CONTENT */}
+                <div className="mt-8">
 
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                    {/* LEFT SIDE */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#FBBF6D]">Pyramids</h1>
+                    {/* HEADER */}
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
 
-                        {/* ICONS */}
-                        <div className="flex mt-0 md:mt-1.5 lg:mt-2 gap-4 text-[#0D3B66]">
-                            <Globe className="cursor-pointer hover:scale-110 transition" />
-                            <Facebook className="cursor-pointer hover:scale-110 transition" />
-                            <MapPin className="cursor-pointer hover:scale-110 transition" />
-                        </div>
-                    </div>
+                        {/* LEFT SIDE */}
+                        <div className="space-y-3">
+                            {/* <h1 className="text-3xl lg:text-4xl font-bold text-[#0D3B66]">{landmark.landmarkName}</h1> */}
 
-                    {/* BUTTON */}
-                    <Button className="w-full sm:w-auto cursor-pointer px-6 py-5 mb-2 md:mb-3 lg:px-7 lg:py-6 mt-0 lg:mt-2 rounded-full shadow-xl bg-linear-to-b from-[#D3A15C] to-[#00000055] hover:scale-95 transition">
-                        Add To Favourite
-                    </Button>
-                </div>
-
-                {/* INFO */}
-                <div className="space-y-2 mt-2 text-[#0D3B66] font-medium">
-                    <p>City : <span className="text-[#F4C27A] ml-2">Giza</span></p>
-
-                    <div className="flex items-center gap-2">Level :
-                        <div className="flex text-[#F4C27A]">
-                            {[...Array(5)].map((_, i) => (
-                                <Star key={i} fill="#F4C27A" stroke="none" />
-                            ))}
-                        </div>
-                    </div>
-
-                    <p>Category :<span className="text-[#F4C27A] ml-2">Landmark</span></p>
-                </div>
-
-                {/* OVERVIEW */}
-                <div className="mt-5">
-                    <h2 className="text-3xl font-semibold text-[#0D3B66]">Overview</h2>
-                    <p className="text-[#FBBF6D] mt-2 max-w-5xl leading-relaxed">
-                        Text" refers to written or printed matter, the words of a book, or an electronic message, but it can also refer to any,Text" refers to written or printed , the words of a book, or an electronic message, but it can also refer to any
-                        <span className="ml-2 underline cursor-pointer">
-                            Read more...
-                        </span>
-                    </p>
-                </div>
-
-                {/* MAKE REVIEW BUTTON */}
-                <div className="flex justify-end me-10 mt-6">
-                    <button className="px-4 py-3 rounded-t-3xl bg-[#E1864F] text-white text-lg shadow-lg cursor-pointer">Make Review</button>
-                </div>
-
-                {/* REVIEWS CARD */}
-                <div className="bg-[#d2ab6d] rounded-3xl shadow-2xl p-8 space-y-6">
-
-                    {/* REVIEW 1 */}
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-gray-500" />
-
-                        <div className="flex-1">
-                            <div className="flex justify-between flex-wrap">
-                                <div>
-                                    <h4 className="font-semibold text-lg text-[#0D3B66]">Hossam Mostafa</h4>
-                                    <p className="text-sm">Egypt / 1-1-2023</p>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <div className="flex text-[#0D3B66]">
-                                        {[...Array(4)].map((_, i) => (
-                                            <Star key={i} fill="#0D3B66" stroke="none" size={20} />
-                                        ))}
-                                        <Star size={20} />
-                                    </div>
-
-                                    <span className="text-md">very nice</span>
-                                </div>
+                            <div className="flex items-center gap-6 text-[#0D3B66]">
+                                <h1 className="text-3xl lg:text-4xl font-bold text-[#0D3B66]">{landmark.landmarkName}</h1>
+                                <Link href={landmark.location.address}>
+                                    <MapPin className="cursor-pointer mt-2 hover:scale-110 transition" />
+                                </Link>
                             </div>
-
-                            <hr className="mt-4 border-[#0D3B66]" />
                         </div>
+
+                        {/* BUTTON */}
+                        <Button className="px-8 py-6 rounded-full shadow-lg bg-[#daab65] text-white hover:bg-[#c3985c] transition cursor-pointer">
+                            Add To Favourite
+                        </Button>
                     </div>
 
-                    {/* REVIEW 2 */}
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-gray-500" />
+                    {/* INFO GRID */}
+                    <div className=" mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-8 rounded-3xl shadow-2xl">
+                        {/* City */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-sm tracking-wide">City</p>
+                            <p className="font-semibold text-white text-lg sm:text-xl">{landmark.location.city}</p>
+                        </div>
 
-                        <div className="flex-1">
-                            <div className="flex justify-between flex-wrap">
-                                <div>
-                                    <h4 className="font-semibold text-lg text-[#0D3B66]">Ahmed Mostafa</h4>
-                                    <p className="text-sm">Egypt / 12-3-2021</p>
-                                </div>
+                        {/* Opening Hour */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-sm tracking-wide">Opening</p>
+                            <p className="font-semibold text-white text-lg sm:text-xl">{landmark.openingHour}</p>
+                        </div>
 
-                                <div className="flex items-center gap-2">
-                                    <div className="flex text-[#0D3B66]">
-                                        {[...Array(3)].map((_, i) => (
-                                            <Star key={i} fill="#0D3B66" stroke="none" size={20} />
-                                        ))}
-                                        {[...Array(2)].map((_, i) => (
-                                            <Star key={i} size={20} />
-                                        ))}
-                                    </div>
+                        {/* Closing Hour */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-sm tracking-wide">Closing</p>
+                            <p className="font-semibold text-white text-lg sm:text-xl">{landmark.closingHour}</p>
+                        </div>
 
-                                    <span className="text-md">good</span>
-                                </div>
+                        {/* Price */}
+                        <div className="space-y-1">
+                            <p className="text-white/75 text-sm tracking-wide">Price</p>
+                            <p className="font-semibold text-white text-lg sm:text-xl">{landmark.price}</p>
+                        </div>
+
+                        {/* Rating */}
+                        <div className="space-y-2 col-span-2 sm:col-span-1">
+                            <p className="text-white/75 text-sm tracking-wide">Rating</p>
+                            <div className="flex justify-center gap-1.5">
+                                {Array.from({ length: totalStars }, (_, index) => {
+                                    const isFilled = index < Math.floor(safeRating)
+                                    return (<StarIcon key={index} className={`w-5 h-5 sm:w-6 sm:h-6 transition ${isFilled ? "text-yellow-400 fill-yellow-400" : "text-white/30"}`} />)
+                                })}
                             </div>
                         </div>
                     </div>
+
+                    {/* OVERVIEW */}
+                    <div className="mt-8 backdrop-blur-xl bg-white/10 border border-white/20 p-8 rounded-3xl shadow-2xl">
+                        <h2 className="text-2xl font-semibold text-white mb-4">Overview</h2>
+                        <p className="text-white/85 leading-relaxed">{landmark.description}</p>
+                    </div>
+
+
+                    {/* REVIEW BUTTON */}
+                    <div className="flex justify-end mt-10">
+                        <Button className="px-8 py-6 rounded-full bg-linear-to-r from-[#D3A15C] to-[#B48A4A] text-white shadow-xl hover:scale-95 transition cursor-pointer">
+                            Make Review
+                        </Button>
+                    </div>
+
+
+                    {/* REVIEWS */}
+                    <div className="mt-5 space-y-6">
+                        {[1, 2].map((item, index) => (
+                            <div key={index} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-xl p-6 flex gap-5 items-start">
+                                <div className="w-12 h-12 rounded-full bg-white/20" />
+                                <div className="flex-1">
+                                    <div className="flex justify-between flex-wrap gap-3">
+                                        <div>
+                                            <h4 className="font-semibold text-white">Ahmed Youssef</h4>
+                                            <p className="text-sm text-white/60">Egypt • 1-1-2023</p>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex text-[#F4C27A]">
+                                                {[...Array(4)].map((_, i) => (
+                                                    <Star key={i} fill="#F4C27A" stroke="none" size={18} />
+                                                ))}
+                                                <Star size={18} />
+                                            </div>
+                                            <span className="text-sm text-white/80">very nice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
             </div>
         </div>
