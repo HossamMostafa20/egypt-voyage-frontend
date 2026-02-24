@@ -120,7 +120,7 @@ export default function LoginForm() {
                 <Button
                     disabled={loading}
                     type="submit"
-                    className="w-full h-12 rounded-2xl text-2xl font-semibold bg-linear-to-b from-[#184e77] to-[#021d33]"
+                    className="w-full h-12 rounded-2xl text-2xl font-semibold bg-linear-to-b from-[#184e77] to-[#021d33] cursor-pointer"
                 >
                     {loading ? <Loader2 className="animate-spin" /> : "Login"}
                 </Button>

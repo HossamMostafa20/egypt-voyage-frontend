@@ -32,9 +32,9 @@ export default function ChangePassword() {
                         <button className={`${baseBtn} w-full ${pathname === "/profile" ? activeBtn : normalBtn}`}>Profile Info</button>
                     </Link>
 
-                    <Link href="/profile/editProfile" className="w-full sm:w-auto">
+                    {/* <Link href="/profile/editProfile" className="w-full sm:w-auto">
                         <button className={`${baseBtn} w-full ${pathname === "/profile/editProfile" ? activeBtn : normalBtn}`}>Edit Profile</button>
-                    </Link>
+                    </Link> */}
 
                     <Link href="/profile/changePassword" className="w-full sm:w-auto">
                         <button className={`${baseBtn} w-full ${pathname === "/profile/changePassword" ? activeBtn : normalBtn}`}>Change password</button>

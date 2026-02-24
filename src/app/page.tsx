@@ -19,11 +19,11 @@ export default function App() {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mt-10">
-          <Link href="/home">
+          {/* <Link href="/home">
             <Button className="px-8 py-7 rounded-xl bg-[#D4A373] text-white font-semibold shadow-xl hover:bg-[#C38E5E] hover:scale-105 transition-all duration-300 cursor-pointer">
               Explore Now
             </Button>
-          </Link>
+          </Link> */}
 
           <Link href="/program">
             <Button className="px-8 py-7 rounded-xl border-2 border-white text-white bg-white/10 font-semibold shadow-lg hover:bg-white hover:text-[#0D3B66] hover:scale-105 transition-all duration-300 cursor-pointer">

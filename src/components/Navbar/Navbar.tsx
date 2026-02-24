@@ -67,11 +67,6 @@ export default function Navbar() {
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <NavigationMenuLink className="font-semibold" asChild>
-                                        <Link href={'/home'}>Home</Link>
-                                    </NavigationMenuLink>
-                                </NavigationMenuItem>
-                                <NavigationMenuItem>
-                                    <NavigationMenuLink className="font-semibold" asChild>
                                         <Link href={'/hotel'}>Hotels</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>

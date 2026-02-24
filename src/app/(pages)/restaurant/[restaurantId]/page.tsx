@@ -66,13 +66,13 @@ export default async function RestaurantDetails({ params }: { params: Params }) 
 
                         {/* Opening Hour */}
                         <div className="space-y-1">
-                            <p className="text-white/75 text-sm tracking-wide">Opening</p>
+                            <p className="text-white/75 text-sm tracking-wide">Opening Hour</p>
                             <p className="font-semibold text-white text-lg sm:text-xl">{restaurant.openingHour}</p>
                         </div>
 
                         {/* Closing Hour */}
                         <div className="space-y-1">
-                            <p className="text-white/75 text-sm tracking-wide">Closing</p>
+                            <p className="text-white/75 text-sm tracking-wide">Closing Hour</p>
                             <p className="font-semibold text-white text-lg sm:text-xl">{restaurant.closingHour}</p>
                         </div>
 
