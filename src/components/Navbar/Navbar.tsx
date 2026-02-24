@@ -17,8 +17,12 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { UserIcon } from "lucide-react"
+import { getToken, clearToken } from "@/lib/authToken"
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+
 export default function Navbar() {
 
     const [open, setOpen] = useState(false);
@@ -37,6 +41,14 @@ export default function Navbar() {
     //         document.removeEventListener("mousedown", handleClickOutside)
     //     }
     // }, [open, setOpen])
+
+    const router = useRouter();
+    const { isLoggedIn, logout } = useAuth();
+
+    function handleLogout() {
+        logout();
+        router.replace("/");
+    }
 
     return <>
         <nav className="py-3 px-4 sm:px-0 sticky top-0 z-50 bg-[#F8DA9A] text-[#0D3B66] shadow">
@@ -137,10 +149,39 @@ export default function Navbar() {
                                 <DropdownMenuGroup>
                                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <Link onClick={() => setOpen(false)} href={'/profile'}><DropdownMenuItem className="cursor-pointer font-semibold">Profile</DropdownMenuItem></Link>
-                                    <Link onClick={() => setOpen(false)} href={'/login'}><DropdownMenuItem className="cursor-pointer font-semibold">Login</DropdownMenuItem></Link>
-                                    <Link onClick={() => setOpen(false)} href={'/signup'}><DropdownMenuItem className="cursor-pointer font-semibold">SignUp</DropdownMenuItem></Link>
-                                    <DropdownMenuItem onClick={() => setOpen(false)} className="cursor-pointer font-semibold">Logout</DropdownMenuItem>
+                                    {!isLoggedIn ? (
+                                        <>
+                                            <Link onClick={() => setOpen(false)} href="/login">
+                                                <DropdownMenuItem className="cursor-pointer font-semibold">
+                                                    Login
+                                                </DropdownMenuItem>
+                                            </Link>
+
+                                            <Link onClick={() => setOpen(false)} href="/signup">
+                                                <DropdownMenuItem className="cursor-pointer font-semibold">
+                                                    SignUp
+                                                </DropdownMenuItem>
+                                            </Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Link onClick={() => setOpen(false)} href="/profile">
+                                                <DropdownMenuItem className="cursor-pointer font-semibold">
+                                                    Profile
+                                                </DropdownMenuItem>
+                                            </Link>
+
+                                            <DropdownMenuItem
+                                                onClick={() => {
+                                                    setOpen(false)
+                                                    handleLogout()
+                                                }}
+                                                className="cursor-pointer font-semibold"
+                                            >
+                                                Logout
+                                            </DropdownMenuItem>
+                                        </>
+                                    )}
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

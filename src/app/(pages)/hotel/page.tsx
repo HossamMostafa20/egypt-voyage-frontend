@@ -6,6 +6,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { HotelI } from '@/interfaces'
+import ProtectedRoute from "@/components/Protected/ProtectedRoute";
+// import AddToFavButton from "@/components/AddToFav/AddToFavButton";
+// import FavoriteToggle from '@/components/AddToFav/AddToFavButton';
 
 export default async function Hotel() {
 
@@ -15,6 +18,7 @@ export default async function Hotel() {
   // console.log("hotel.id:", hotels[0].id);
 
   return <>
+
     <form className="max-w-md mx-auto p-2 lg:p-3.5">
       <label htmlFor="search" className="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
       <div className="flex gap-2 relative">
@@ -47,6 +51,7 @@ export default async function Hotel() {
               </CardHeader>
             </Link>
             <Button className='mt-2.5 cursor-pointer mx-7 py-5 mb-5 bg-linear-to-b from-[#D3A15C] to-[#00000055]'><HeartIcon /> Add To Favourite</Button>
+            {/* <FavoriteToggle itemId={hotel.id} type="hotel" /> */}
           </Card>
         </div>
       )}
