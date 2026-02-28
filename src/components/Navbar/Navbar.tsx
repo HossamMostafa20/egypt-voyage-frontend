@@ -22,6 +22,7 @@ import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { Button } from "../ui/button"
 
 export default function Navbar() {
 
@@ -65,26 +66,82 @@ export default function Navbar() {
                     <div className="order-first lg:order-0">
                         <NavigationMenu className="hidden lg:flex">
                             <NavigationMenuList>
+
                                 <NavigationMenuItem>
                                     <NavigationMenuLink className="font-semibold" asChild>
                                         <Link href={'/hotel'}>Hotels</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
+
                                 <NavigationMenuItem>
                                     <NavigationMenuLink className="font-semibold" asChild>
                                         <Link href={'/landmark'}>Landmarks</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
+
                                 <NavigationMenuItem>
                                     <NavigationMenuLink className="font-semibold" asChild>
                                         <Link href={'/restaurant'}>Restaurants</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
+
                                 <NavigationMenuItem>
                                     <NavigationMenuLink className="font-semibold" asChild>
                                         <Link href={'/program'}>Programs</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
+
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" className="cursor-pointer -ms-0.5 hover:bg-[#0D3B66] hover:text-white focus-visible:outline-none focus-visible:ring-0 focus:outline-none">
+                                            Virtual Tours
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className=" bg-[#0D3B66]/85 backdrop-blur-md text-[#F8DA9A] border border-white/20 shadow-2xl rounded-xl">
+                                        <DropdownMenuGroup>
+                                            <Link href={'https://mpembed.com/show/?m=sgMWWDvdKsV&mpu=497'}>
+                                                <DropdownMenuItem className="cursor-pointer">Abu Simbel Temple</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://my.matterport.com/show/?m=BsXpwTSYSyN'}>
+                                                <DropdownMenuItem className="cursor-pointer">Wahty Tomb</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://my.matterport.com/show/?m=PKxweZaPG3P'}>
+                                                <DropdownMenuItem className="cursor-pointer">Niankh-khnum & Khnumhotep Tomb</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://my.matterport.com/show/?m=xmDbt2rfa82'}>
+                                                <DropdownMenuItem className="cursor-pointer">Mehu Tomb</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://my.matterport.com/show/?m=vLYoS66CWpk'}>
+                                                <DropdownMenuItem className="cursor-pointer">Tomb of Menna</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://arce.org/theban-tombs-286-and-159/'}>
+                                                <DropdownMenuItem className="cursor-pointer">Theban Tombs</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://mpembed.com/show/?m=yMMHWqMJZbY'}>
+                                                <DropdownMenuItem className="cursor-pointer">Coptic Museum</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://mpembed.com/show/?m=LCyv1zFUxiq'}>
+                                                <DropdownMenuItem className="cursor-pointer">Gayer-Anderson Museum</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://arce.org/bab-zuwayla/'}>
+                                                <DropdownMenuItem className="cursor-pointer">Bab Zuwayla Museum</DropdownMenuItem>
+                                            </Link>
+
+                                            <Link href={'https://arce.org/museum-monastery-st-anthony/'}>
+                                                <DropdownMenuItem className="cursor-pointer">Monastery of St. Anthony Museum</DropdownMenuItem>
+                                            </Link>
+                                        </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+
                             </NavigationMenuList>
                         </NavigationMenu>
                         <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="lg:hidden size-7 cursor-pointer">
@@ -224,12 +281,7 @@ export default function Navbar() {
                             className="overflow-hidden lg:hidden"
                         >
                             <NavigationMenu>
-                                <NavigationMenuList className="flex flex-col gap-1 items-start">
-                                    <NavigationMenuItem>
-                                        <NavigationMenuLink className="font-semibold text-start" asChild>
-                                            <Link onClick={() => setOpen(false)} href="/home">Home</Link>
-                                        </NavigationMenuLink>
-                                    </NavigationMenuItem>
+                                <NavigationMenuList className="flex flex-col gap-1 items-">
 
                                     <NavigationMenuItem>
                                         <NavigationMenuLink className="font-semibold" asChild>
@@ -254,6 +306,58 @@ export default function Navbar() {
                                             <Link onClick={() => setOpen(false)} href="/program">Programs</Link>
                                         </NavigationMenuLink>
                                     </NavigationMenuItem>
+
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" className="cursor-pointer -ms-0.5 hover:bg-[#0D3B66] hover:text-white focus-visible:outline-none focus-visible:ring-0 focus:outline-none">
+                                                Virtual Tours
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent className=" bg-[#0D3B66]/85 backdrop-blur-md text-[#F8DA9A] border border-white/20 shadow-2xl rounded-xl">
+                                            <DropdownMenuGroup>
+                                                <Link href={'https://mpembed.com/show/?m=sgMWWDvdKsV&mpu=497'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Abu Simbel Temple</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://my.matterport.com/show/?m=BsXpwTSYSyN'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Wahty Tomb</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://my.matterport.com/show/?m=PKxweZaPG3P'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Niankh-khnum & Khnumhotep Tomb</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://my.matterport.com/show/?m=xmDbt2rfa82'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Mehu Tomb</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://my.matterport.com/show/?m=vLYoS66CWpk'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Tomb of Menna</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://arce.org/theban-tombs-286-and-159/'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Theban Tombs</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://mpembed.com/show/?m=yMMHWqMJZbY'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Coptic Museum</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://mpembed.com/show/?m=LCyv1zFUxiq'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Gayer-Anderson Museum</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://arce.org/bab-zuwayla/'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Bab Zuwayla Museum</DropdownMenuItem>
+                                                </Link>
+
+                                                <Link href={'https://arce.org/museum-monastery-st-anthony/'}>
+                                                    <DropdownMenuItem className="cursor-pointer">Monastery of St. Anthony Museum</DropdownMenuItem>
+                                                </Link>
+                                            </DropdownMenuGroup>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+
                                 </NavigationMenuList>
                             </NavigationMenu>
                         </motion.div>

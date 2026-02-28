@@ -1,116 +1,155 @@
-// "use client";
+"use client";
 
-// import { createContext, useContext, useEffect, useState } from "react";
-// import { FavoriteList, FavoriteType } from "@/interfaces/FavoriteList";
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+    addToFavorites,
+    removeFromFavorites,
+    getMyFavorites,
+} from "@/services/favorite.service";
+import { toast } from "sonner";
+import { EntityType } from "@/interfaces";
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
-// const BASE_URL = "http://egyptvoyage.runasp.net";
+type FavoriteMap = {
+    hotel: string[];
+    restaurant: string[];
+    landmark: string[];
+    program: string[];
+};
 
-// interface FavoriteContextType {
-//     list: FavoriteList | null;
-//     isInFavorites: (itemId: string, type: FavoriteType) => boolean;
-//     toggleFavorite: (itemId: string, type: FavoriteType) => Promise<void>;
-// }
+interface FavoriteContextType {
+    favorites: FavoriteMap;
+    toggleFavorite: (id: string, type: EntityType) => void;
+    isFavorite: (id: string, type: EntityType) => boolean;
+    loading: boolean;
+}
 
-// const FavoriteContext = createContext<FavoriteContextType | null>(null);
+const FavoriteContext = createContext<FavoriteContextType | null>(null);
 
-// export function FavoriteProvider({ children }: { children: React.ReactNode }) {
-//     const [list, setList] = useState<FavoriteList | null>(null);
+export const FavoriteProvider = ({ children, }: { children: React.ReactNode; }) => {
+    const [favorites, setFavorites] = useState<FavoriteMap>({ hotel: [], restaurant: [], landmark: [], program: [], });
 
-//     // 🟢 تحميل المفضلة أول ما المستخدم يدخل
-//     useEffect(() => {
-//         const fetchFavorites = async () => {
-//             const token = localStorage.getItem("token");
-//             if (!token) return;
+    const [loading, setLoading] = useState(true);
 
-//             const res = await fetch(
-//                 "http://egyptvoyage.runasp.net/api/FavoriteLists/my",
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                     },
-//                 }
-//             );
-//             console.log("Token:", token);
+    const router = useRouter();
 
-//             console.log("Status:", res.status);
+    const { isAuthenticated } = useAuth();
 
-//             if (!res.ok) {
-//                 throw new Error("Request failed");
-//             }
 
-//             const data = await res.json();
-//         };
+    //     GET 
+    useEffect(() => {
+        const fetchFavorites = async () => {
 
-//         fetchFavorites();
-//     }, []);
+            if (!isAuthenticated) {
+                setFavorites({ hotel: [], restaurant: [], landmark: [], program: [], });
+                setLoading(false);
+                return;
+            }
 
-//     // 🟢 نحدد اسم الحقل حسب النوع
-//     const getField = (type: FavoriteType) => {
-//         const map = {
-//             hotel: "hotelIds",
-//             restaurant: "restaurantIds",
-//             landmark: "landmarkIds",
-//             program: "programIds",
-//         } as const;
+            setLoading(true);
 
-//         return map[type];
-//     };
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
 
-//     // 🟢 هل العنصر موجود؟
-//     const isInFavorites = (itemId: string, type: FavoriteType) => {
-//         if (!list) return false;
-//         const field = getField(type);
-//         return list[field]?.includes(itemId);
-//     };
+                const data = await getMyFavorites(token);
 
-//     // 🟢 Toggle (Optimistic Update)
-//     const toggleFavorite = async (itemId: string, type: FavoriteType) => {
-//         if (!list) return;
+                setFavorites({
+                    hotel: data.hotels.map((h) => h.id),
+                    restaurant: data.restaurants.map((r) => r.id),
+                    landmark: data.landmarks.map((l) => l.id),
+                    program: data.programs.map((p) => p.id),
+                });
 
-//         const token = localStorage.getItem("token");
-//         if (!token) return;
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-//         const field = getField(type);
-//         const exists = list[field].includes(itemId);
+        fetchFavorites();
+    }, [isAuthenticated]);
 
-//         // 🟡 Optimistic Update
-//         const updatedList: FavoriteList = {
-//             ...list,
-//             [field]: exists
-//                 ? list[field].filter((id) => id !== itemId)
-//                 : [...list[field], itemId],
-//         };
+    //    toggle logic
+    const toggleFavorite = async (id: string, type: EntityType) => {
+        const token = localStorage.getItem("token");
 
-//         setList(updatedList); // يحدث UI فورًا ❤️
 
-//         try {
-//             await fetch(`${BASE_URL}/api/FavoriteLists/${list.id}`, {
-//                 method: "PUT",
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify(updatedList),
-//             });
-//         } catch (error) {
-//             console.error("Failed to update favorites", error);
-//             setList(list); // rollback لو فشل
-//         }
-//     };
+        if (!token) {
+            toast.error("Please login first");
+            router.push("/login");
+            return;
+        }
 
-//     return (
-//         <FavoriteContext.Provider
-//             value={{ list, isInFavorites, toggleFavorite }}
-//         >
-//             {children}
-//         </FavoriteContext.Provider>
-//     );
-// }
+        const isFav = favorites[type].includes(id);
 
-// export function useFavorites() {
-//     const context = useContext(FavoriteContext);
-//     if (!context) {
-//         throw new Error("useFavorites must be used inside FavoriteProvider");
-//     }
-//     return context;
-// }
+        //   Optimistic Update
+        setFavorites((prev) => ({
+            ...prev,
+            [type]: isFav
+                ? prev[type].filter((item) => item !== id)
+                : [...prev[type], id],
+        }));
+
+        try {
+            if (isFav) {
+                await removeFromFavorites(token, id, type);
+                toast("Item Removed Successfully", {
+                    icon: <Trash2 size={18} />,
+                    style: {
+                        background: "#FDECEC",
+                        color: "#7F1D1D",
+                        border: "1px solid #FCA5A5",
+                    },
+                });
+
+            } else {
+                await addToFavorites(token, id, type);
+                toast.success("Item Added Successfully", {
+                    style: {
+                        background: "#0D3B66",
+                        color: "white",
+                        border: "1px solid #D3A15C"
+                    },
+                });
+            }
+
+        } catch (err) {
+            // Rollback لو حصل error
+            setFavorites((prev) => ({
+                ...prev,
+                [type]: isFav
+                    ? [...prev[type], id]
+                    : prev[type].filter((item) => item !== id),
+            }));
+
+            toast.error("Something went wrong", {
+                style: {
+                    background: "#8B0000",
+                    color: "white",
+                },
+                description: "Please try again",
+            });
+        }
+    };
+
+    const isFavorite = (id: string, type: EntityType) => {
+        return favorites[type].includes(id);
+    };
+
+    return (
+        <FavoriteContext.Provider value={{ favorites, toggleFavorite, isFavorite, loading }}>
+            {children}
+        </FavoriteContext.Provider>
+    );
+};
+
+export const useFavorites = () => {
+    const context = useContext(FavoriteContext);
+    if (!context)
+        throw new Error("useFavorites must be used within FavoriteProvider");
+    return context;
+};
