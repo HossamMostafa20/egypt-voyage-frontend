@@ -1,15 +1,9 @@
 "use client";
 
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    ReactNode,
-} from "react";
+import { createContext, useContext, useEffect, useState, ReactNode,} from "react";
 import { getToken, setToken as saveToken, clearToken } from "@/lib/authToken";
 
-/* ---------- Type Definition ---------- */
+/* Type Definition */
 
 type User = {
     sub: string;
@@ -23,14 +17,14 @@ type AuthContextType = {
     login: (token: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
-    user: User | null; // 👈 جديد
+    user: User | null;
 };
 
-/* ---------- Create Context ---------- */
+/* Create Context */
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-/* ---------- Provider ---------- */
+/* Provider */
 
 type AuthProviderProps = {
     children: ReactNode;
@@ -40,7 +34,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -82,7 +75,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     );
 }
 
-/* ---------- Hook ---------- */
+/* Hook */
 
 export function useAuth(): AuthContextType {
     const context = useContext(AuthContext);

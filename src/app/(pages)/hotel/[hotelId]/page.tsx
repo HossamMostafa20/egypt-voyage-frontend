@@ -12,6 +12,6 @@ export default async function HotelDetails({ params }: { params: Params }) {
     console.log(hotel);
 
     return <>
-        <HotelsDetailsClient hotel={hotel} />;
+        <HotelsDetailsClient hotel={hotel} />
     </>
 }
