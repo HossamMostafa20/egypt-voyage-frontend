@@ -1,7 +1,9 @@
-import React from 'react'
+import HomeRecommendations from "@/components/HomeRecommendations/HomeRecommendations";
 
-export default function Home() {
-    return <>
-        <h1>Home Page</h1>
-    </>
+export default function HomePage() {
+  return <>
+    <div>
+      <HomeRecommendations />
+    </div>
+  </>
 }

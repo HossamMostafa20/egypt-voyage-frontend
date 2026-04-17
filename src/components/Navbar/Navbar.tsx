@@ -20,11 +20,15 @@ import { UserIcon } from "lucide-react"
 import { getToken, clearToken } from "@/lib/authToken"
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "../ui/button"
 
 export default function Navbar() {
+
+    const pathname = usePathname();
+
+    const navLinkClass = (path: string) => `font-semibold rounded-sm p-2 transition-all ${pathname === path ? "bg-[#0D3B66] text-white" : "text-[#0D3B66] hover:bg-[#0D3B66] hover:text-white"}`;
 
     const [open, setOpen] = useState(false);
 
@@ -68,32 +72,42 @@ export default function Navbar() {
                             <NavigationMenuList>
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuLink className="font-semibold" asChild>
-                                        <Link href={'/home'}>Home</Link>
+                                    <NavigationMenuLink asChild>
+                                        <Link href="/home" className={navLinkClass("/home")}>
+                                            Home
+                                        </Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuLink className="font-semibold" asChild>
-                                        <Link href={'/hotel'}>Hotels</Link>
+                                    <NavigationMenuLink asChild>
+                                        <Link href="/hotel" className={navLinkClass("/hotel")}>
+                                            Hotels
+                                        </Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuLink className="font-semibold" asChild>
-                                        <Link href={'/landmark'}>Landmarks</Link>
+                                    <NavigationMenuLink asChild>
+                                        <Link href="/landmark" className={navLinkClass("/landmark")}>
+                                            Landmarks
+                                        </Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuLink className="font-semibold" asChild>
-                                        <Link href={'/restaurant'}>Restaurants</Link>
+                                    <NavigationMenuLink asChild>
+                                        <Link href="/restaurant" className={navLinkClass("/restaurant")}>
+                                            Restaurants
+                                        </Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuLink className="font-semibold" asChild>
-                                        <Link href={'/program'}>Programs</Link>
+                                    <NavigationMenuLink asChild>
+                                        <Link href="/program" className={navLinkClass("/program")}>
+                                            Programs
+                                        </Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 

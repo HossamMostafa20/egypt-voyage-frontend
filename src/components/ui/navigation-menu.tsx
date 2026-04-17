@@ -121,6 +121,22 @@ function NavigationMenuViewport({
   )
 }
 
+// function NavigationMenuLink({
+//   className,
+//   ...props
+// }: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
+//   return (
+//     <NavigationMenuPrimitive.Link
+//       data-slot="navigation-menu-link"
+//       className={cn(
+//         "data-[active=true]:focus:bg-[#0D3B66] data-[active=true]:hover:bg-[#0D3B66] data-[active=true]:bg-[#0D3B66] data-[active=true]:text-white hover:bg-[#0D3B66] hover:text-white focus:bg-[#0D3B66] focus:text-white focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+//         className
+//       )}
+//       {...props}
+//     />
+//   )
+// }
+
 function NavigationMenuLink({
   className,
   ...props
@@ -129,7 +145,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "data-[active=true]:focus:bg-[#0D3B66] data-[active=true]:hover:bg-[#0D3B66] data-[active=true]:bg-[#0D3B66] data-[active=true]:text-white hover:bg-[#0D3B66] hover:text-white focus:bg-[#0D3B66] focus:text-white focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+        "flex flex-col gap-1 text-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

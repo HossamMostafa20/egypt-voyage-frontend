@@ -21,7 +21,7 @@ export async function sendRegisterData(userData) {
 
 //            Login
 export async function sendLoginData(data) {
-    const res = await fetch("/api/auth/login", {
+    const res = await fetch("http://egyptvoyage.runasp.net/api/Auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

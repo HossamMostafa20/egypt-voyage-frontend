@@ -1,11 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-    addToFavorites,
-    removeFromFavorites,
-    getMyFavorites,
-} from "@/services/favorite.service";
+import { addToFavorites, removeFromFavorites, getMyFavorites } from "@/services/favorite.service";
 import { toast } from "sonner";
 import { EntityType } from "@/interfaces";
 import { Trash2 } from "lucide-react";

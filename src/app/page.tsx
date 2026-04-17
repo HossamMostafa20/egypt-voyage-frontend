@@ -11,7 +11,7 @@ export default function App() {
       {/* Content */}
       <div className="relative px-6 max-w-4xl animate-fadeIn">
         <h1 className="text-4xl sm:text-6xl font-extrabold text-white leading-tight drop-shadow-2xl">
-          Welcome To <span className="text-[#D4A373]">Egypt Voyage</span>
+          Welcome To <span className="text-[#fbc289]">Egypt Voyage</span>
         </h1>
 
         <p className="mx-auto mt-6 text-lg sm:text-xl text-white/90 leading-relaxed">
@@ -25,11 +25,11 @@ export default function App() {
             </Button>
           </Link> */}
 
-          <Link href="/program">
+          {/* <Link href="/program">
             <Button className="px-8 py-7 rounded-xl border-2 border-white text-white bg-white/10 font-semibold shadow-lg hover:bg-white hover:text-[#0D3B66] hover:scale-105 transition-all duration-300 cursor-pointer">
               Browse Programs
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

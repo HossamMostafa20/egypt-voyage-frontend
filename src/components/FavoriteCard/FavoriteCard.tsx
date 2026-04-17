@@ -41,7 +41,7 @@ export default function FavoriteCard({ id, entityType, title, city, description,
     return <>
         <div className="p-0.5">
             <Link href={getDetailsPath()}>
-                <Card className="flex flex-col h-full transform transition-all duration-500 hover:shadow-[0_0_13px_rgba(0,0,0,0.15)] hover:shadow-black">
+                <Card className="flex flex-col h-full pb-2.5 transform transition-all duration-500 hover:shadow-[0_0_13px_rgba(0,0,0,0.15)] hover:shadow-black">
 
                     <Image src={image} className="w-full h-48 rounded-t-xl object-cover" alt={title} width={500} height={500} />
 
