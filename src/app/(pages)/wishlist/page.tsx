@@ -232,35 +232,37 @@ export default function FavoritesPage() {
     return <p className="text-center p-6">No favorites found</p>;
 
   return <>
-    <div className="flex items-center justify-center p-3">
-      <h1 className="text-3xl font-bold text-[#0D3B66] flex items-center gap-2">
-        My Favorites
-        <Heart className="size-8 text-[#0D3B66] fill-current" />
-      </h1>
+    <div className="min-h-168.75">
+      <div className="flex items-center justify-center p-3">
+        <h1 className="text-3xl font-bold text-[#0D3B66] flex items-center gap-2">
+          My Favorites
+          <Heart className="size-8 text-[#0D3B66] fill-current" />
+        </h1>
 
-      <Button onClick={handleShare} className="absolute right-3 bg-[#0D3B66] text-white flex items-center gap-2 cursor-pointer">
-        <Share2 className="size-4" />
-        Share
-      </Button>
-    </div>
-
-    {/* Tabs */}
-    <div className="flex justify-center mb-5">
-      <FavoritesTabs value={activeTab} onChange={setActiveTab} />
-    </div>
-
-    {/* Grid */}
-    {/* <FavoritesGrid>{content}</FavoritesGrid> */}
-
-    {itemsCount === 0 ? (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center text-center">
-        {/* <Heart className="size-16 text-[#D3A15C] mb-4 opacity-70" /> */}
-        <h2 className="text-2xl font-semibold text-[#0D3B66]">No Favorites Yet</h2>
-        <p className="text-gray-800 text-lg mt-2">Start exploring and add your favorite places.</p>
+        <Button onClick={handleShare} className="absolute right-3 bg-[#0D3B66] text-white flex items-center gap-2 cursor-pointer">
+          <Share2 className="size-4" />
+          Share
+        </Button>
       </div>
-    ) : (
-      <FavoritesGrid>{content}</FavoritesGrid>
-    )}
+
+      {/* Tabs */}
+      <div className="flex justify-center mb-5">
+        <FavoritesTabs value={activeTab} onChange={setActiveTab} />
+      </div>
+
+      {/* Grid */}
+      {/* <FavoritesGrid>{content}</FavoritesGrid> */}
+
+      {itemsCount === 0 ? (
+        <div className="min-h-[50vh] flex flex-col items-center justify-center text-center">
+          {/* <Heart className="size-16 text-[#D3A15C] mb-4 opacity-70" /> */}
+          <h2 className="text-2xl font-semibold text-[#0D3B66]">No Favorites Yet</h2>
+          <p className="text-gray-800 text-lg mt-2">Start exploring and add your favorite places.</p>
+        </div>
+      ) : (
+        <FavoritesGrid>{content}</FavoritesGrid>
+      )}
+    </div>
   </>
 }
 

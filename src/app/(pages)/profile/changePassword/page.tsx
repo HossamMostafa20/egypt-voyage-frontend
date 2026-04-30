@@ -61,89 +61,91 @@ export default function ChangePassword() {
 
     return <>
         <ProtectedRoute>
-            {/* Title */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-center font-medium text-[#0D3B66] p-6 sm:p-9">Hi , {user?.name}</h1>
+            <div className="min-h-168.75">
+                {/* Title */}
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl text-center font-medium text-[#0D3B66] p-6 sm:p-9">Hi , {user?.name}</h1>
 
-            <div className="flex flex-col items-center justify-center px-4">
-                {/* Tabs */}
-                <div className="flex flex-col sm:flex-row gap-3 z-10 w-80 sm:w-full sm:justify-center">
-                    <Link href="/profile" className="w-full sm:w-auto">
-                        <button className={`${baseBtn} w-full ${pathname === "/profile" ? activeBtn : normalBtn}`}>Profile Info</button>
-                    </Link>
+                <div className="flex flex-col items-center justify-center px-4">
+                    {/* Tabs */}
+                    <div className="flex flex-col sm:flex-row gap-3 z-10 w-80 sm:w-full sm:justify-center">
+                        <Link href="/profile" className="w-full sm:w-auto">
+                            <button className={`${baseBtn} w-full ${pathname === "/profile" ? activeBtn : normalBtn}`}>Profile Info</button>
+                        </Link>
 
-                    {/* <Link href="/profile/editProfile" className="w-full sm:w-auto">
+                        {/* <Link href="/profile/editProfile" className="w-full sm:w-auto">
                         <button className={`${baseBtn} w-full ${pathname === "/profile/editProfile" ? activeBtn : normalBtn}`}>Edit Profile</button>
                     </Link> */}
 
-                    <Link href="/profile/changePassword" className="w-full sm:w-auto">
-                        <button className={`${baseBtn} w-full ${pathname === "/profile/changePassword" ? activeBtn : normalBtn}`}>Change password</button>
-                    </Link>
-                </div>
+                        <Link href="/profile/changePassword" className="w-full sm:w-auto">
+                            <button className={`${baseBtn} w-full ${pathname === "/profile/changePassword" ? activeBtn : normalBtn}`}>Change password</button>
+                        </Link>
+                    </div>
 
-                {/* Card */}
-                <div className="w-full max-w-5xl bg-[#E5BB7A] rounded-[30px] shadow-2xl mb-3">
-                    <h2 className="text-2xl sm:text-3xl font-semibold text-center text-[#0D3B66] mt-6">Update Password</h2>
+                    {/* Card */}
+                    <div className="w-full max-w-5xl bg-[#E5BB7A] rounded-[30px] shadow-2xl mb-3">
+                        <h2 className="text-2xl sm:text-3xl font-semibold text-center text-[#0D3B66] mt-6">Update Password</h2>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-3 p-4'>
-                        <div>
-                            <Label className="text-lg ms-1.5 p-0.5">Current Password</Label>
-                            <div className="relative">
-                                <Input {...register("currentPassword")} type={firstshow ? "text" : "password"} placeholder="Enter Your Current Password" className=" rounded-full bg-[#FFE4BC] px-6 py-5 pr-12" />
+                        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-3 p-4'>
+                            <div>
+                                <Label className="text-lg ms-1.5 p-0.5">Current Password</Label>
+                                <div className="relative">
+                                    <Input {...register("currentPassword")} type={firstshow ? "text" : "password"} placeholder="Enter Your Current Password" className=" rounded-full bg-[#FFE4BC] px-6 py-5 pr-12" />
 
-                                <Button type="button" onClick={() => setFirstshow(!firstshow)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
-                                    {firstshow ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </Button>
+                                    <Button type="button" onClick={() => setFirstshow(!firstshow)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
+                                        {firstshow ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </Button>
+                                </div>
+                                {errors.currentPassword && (
+                                    <p className="text-red-500 text-sm ms-1.5 mt-0.5">
+                                        {errors.currentPassword.message}
+                                    </p>
+                                )}
                             </div>
-                            {errors.currentPassword && (
-                                <p className="text-red-500 text-sm ms-1.5 mt-0.5">
-                                    {errors.currentPassword.message}
-                                </p>
-                            )}
-                        </div>
 
-                        <div>
-                            <Label className="text-lg ms-1.5 p-0.5">New Password</Label>
-                            <div className="relative">
-                                <Input {...register("newPassword")} type={secondshow ? "text" : "password"} placeholder="Enter Your New Password" className=" rounded-full bg-[#FFE4BC] px-6 py-5 pr-12" />
+                            <div>
+                                <Label className="text-lg ms-1.5 p-0.5">New Password</Label>
+                                <div className="relative">
+                                    <Input {...register("newPassword")} type={secondshow ? "text" : "password"} placeholder="Enter Your New Password" className=" rounded-full bg-[#FFE4BC] px-6 py-5 pr-12" />
 
-                                <Button type="button" onClick={() => setSecondshow(!secondshow)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
-                                    {secondshow ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </Button>
+                                    <Button type="button" onClick={() => setSecondshow(!secondshow)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
+                                        {secondshow ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </Button>
+                                </div>
+                                {errors.newPassword && (
+                                    <p className="text-red-500 text-sm ms-1.5 mt-0.5">
+                                        {errors.newPassword.message}
+                                    </p>
+                                )}
                             </div>
-                            {errors.newPassword && (
-                                <p className="text-red-500 text-sm ms-1.5 mt-0.5">
-                                    {errors.newPassword.message}
-                                </p>
-                            )}
-                        </div>
 
-                        <div>
-                            <Label className="text-lg ms-1.5 p-0.5">Confirm Password</Label>
-                            <div className="relative">
-                                <Input {...register("confirmNewPassword")} type={thirdshow ? "text" : "password"} placeholder="Confirm Your New Password" className=" rounded-full bg-[#FFE4BC] px-6 py-5 pr-12" />
+                            <div>
+                                <Label className="text-lg ms-1.5 p-0.5">Confirm Password</Label>
+                                <div className="relative">
+                                    <Input {...register("confirmNewPassword")} type={thirdshow ? "text" : "password"} placeholder="Confirm Your New Password" className=" rounded-full bg-[#FFE4BC] px-6 py-5 pr-12" />
 
-                                <Button type="button" onClick={() => setThirdshow(!thirdshow)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
-                                    {thirdshow ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </Button>
+                                    <Button type="button" onClick={() => setThirdshow(!thirdshow)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D3B66] bg-transparent">
+                                        {thirdshow ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </Button>
+                                </div>
+                                {errors.confirmNewPassword && (
+                                    <p className="text-red-500 text-sm ms-1.5 mt-0.5">
+                                        {errors.confirmNewPassword.message}
+                                    </p>
+                                )}
                             </div>
-                            {errors.confirmNewPassword && (
-                                <p className="text-red-500 text-sm ms-1.5 mt-0.5">
-                                    {errors.confirmNewPassword.message}
-                                </p>
-                            )}
-                        </div>
 
-                        <div className="flex flex-wrap gap-4 justify-evenly pt-5">
-                            <Button type="submit" disabled={isSubmitting} className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#135491] to-[#001d35] cursor-pointer flex items-center justify-center min-w-60">
-                                {isSubmitting ? <Loader2 className="animate-spin w-6 h-6" /> : "Update Password"}
-                            </Button>
-                            <Link href={'../forget-password'}>
-                                <Button className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#D3A15C] to-[#00000094] cursor-pointer">
-                                    Forget Password
+                            <div className="flex flex-wrap gap-4 justify-evenly pt-5">
+                                <Button type="submit" disabled={isSubmitting} className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#135491] to-[#001d35] cursor-pointer flex items-center justify-center min-w-60">
+                                    {isSubmitting ? <Loader2 className="animate-spin w-6 h-6" /> : "Update Password"}
                                 </Button>
-                            </Link>
-                        </div>
-                    </form>
+                                <Link href={'../forget-password'}>
+                                    <Button className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#D3A15C] to-[#00000094] cursor-pointer">
+                                        Forget Password
+                                    </Button>
+                                </Link>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </ProtectedRoute>
